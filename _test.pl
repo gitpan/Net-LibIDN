@@ -1,25 +1,20 @@
-# Before `make install' is performed this script should be runnable withHHHHHH
+# Before `make install' is performed this script should be runnable with
 # `make test'. After `make install' it should work as `perl test.pl'
 
 #########################
 
-# change 'tests => 1' to 'tests => last_test_to_print';
-
 use strict;
 use Test;
+
 #IF_TLD
-BEGIN { plan tests => 26, todo => [] };
+BEGIN { plan tests => 21, todo => [] };
 #ELSE_TLD
 BEGIN { plan tests => 10, todo => [] };
 #ENDIF_TLD
 
 use Net::LibIDN;
-ok(1); # If we made it this far, we're ok.
 
 #########################
-
-# Insert your test code below, the Test module is use()ed here so read
-# its man page ( perldoc Test ) for help writing this test script.
 
 ok(Net::LibIDN::idn_to_ascii("b\xF6se.de", "ISO-8859-1"), "xn--bse-sna.de");
 ok(Net::LibIDN::idn_to_ascii("b\xC3\xB6se.de","UTF-8"), "xn--bse-sna.de");
@@ -37,53 +32,43 @@ ok(Net::LibIDN::idn_prep_name("GR\xD6\xDFeR", "ISO-8859-1"), "gr\xF6sser");
 ok(Net::LibIDN::idn_prep_name("GR\xC3\xB6\xC3\x9Fer", "UTF-8"), "gr\xC3\xB6sser");
 
 #IF_TLD
-{
-my $errpos;
-my $res = Net::LibIDN::tld_check("p\xE8rle.se", $errpos, "ISO-8859-1");
-ok($errpos, 1);
-ok($res, 0);
-}
+
+my $has_nono;
 
 {
-my $errpos;
-my $res = Net::LibIDN::tld_check("p\xE8rle.se", $errpos, "ISO-8859-1", "de");
-ok($errpos, 0);
-ok($res, 1);
-}
-
-{
-my $errpos;
-my $res = Net::LibIDN::tld_check("APR\xE8", $errpos, "ISO-8859-1", "info");
-ok($errpos, 3);
-ok($res, 0);
-}
-
-{
-my $errpos;
-my $res = Net::LibIDN::tld_check("APR\xFCT\xE9", $errpos, undef, "info");
-ok($errpos, 5);
-ok($res, 0);
-}
-
-ok(Net::LibIDN::tld_get("Kruder.DorfMeister"), "dorfmeister");
-ok(Net::LibIDN::tld_get("GR\xC3\xB6\xC3\x9Fer"), undef);
-
-{
-my $res = Net::LibIDN::tld_get_table("de");
-ok($$res{name}, "de");
-ok($$res{nvalid}, 62);
+my $res = Net::LibIDN::tld_get_table("no");
+$has_nono = $$res{name} ne "no";
+skip($has_nono, $$res{name}, "no");
+skip($has_nono, $$res{nvalid}, 13);
 my $sum = 0;
 my $zero = 0;
-for (my $i=0; $i<62; $i++)
+for (my $i=0; $i<13; $i++)
 {
 	$zero = 1 if (!$$res{valid}[$i]{start} && !$$res{valid}[$i]{end});
 	$sum += $$res{valid}[$i]{start};
 	$sum += $$res{valid}[$i]{end};
 }
-ok($sum, 39278);
-ok($zero, 0);
-
+skip($has_nono, $sum, 7470);
+skip($has_nono, $zero, 0);
 }
+
+
+{
+my $errpos;
+my $res = Net::LibIDN::tld_check("p\xFBrle.no", $errpos, "ISO-8859-1");
+skip($has_nono, $errpos, 1);
+skip($has_nono, $res, 0);
+}
+
+{
+my $errpos;
+my $res = Net::LibIDN::tld_check("p\xFBrle.no", $errpos, "ISO-8859-1", "com");
+ok($errpos, 0);
+ok($res, 1);
+}
+
+ok(Net::LibIDN::tld_get("Kruder.DorfMeister"), "dorfmeister");
+ok(Net::LibIDN::tld_get("GR\xC3\xB6\xC3\x9Fer"), undef);
 
 ok(Net::LibIDN::tld_get_table("mars"), undef);
 

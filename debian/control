@@ -12,5 +12,3 @@ Description:  Perl bindings for GNU Libidn
  Provides bindings for GNU Libidn, a C library for handling Internationalized
  Domain Names according to IDNA (RFC 3490), in a way very much inspired by
  Turbo Fredriksson's PHP-IDN.
- .
- This description was automagically extracted from the module by dh-make-perl.

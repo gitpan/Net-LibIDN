@@ -6,18 +6,19 @@ use Getopt::Long;
 # the contents of the Makefile that is written.
 
 my %MakeParams = InitMakeParams();
+my $options;
 
 WriteMakefile(%MakeParams);
 
 
-sub MY::postamble {
-	'
+sub MY::postamble {	
+	"
 LibIDN.pm: _LibIDN.pm _test.pl
-	perl Makefile.PL
+	perl Makefile.PL $options
 
 test.pl: _test.pl
-	perl Makefile.PL
-'
+	perl Makefile.PL $options
+"
 }
 
 sub InitMakeParams
@@ -37,6 +38,8 @@ sub InitMakeParams
 		clean			=> { FILES => "test.pl LibIDN.pm" }
 	);
 	my ($libdir, $incdir, $disable_tld);
+
+	$options=join(' ', @ARGV);
 
 	GetOptions
 	(

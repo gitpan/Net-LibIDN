@@ -60,7 +60,7 @@ install-stamp:
 	# As this is a architecture dependent package, we are not supposed to install
 	# stuff to /usr/share/perl5. MakeMaker creates the dirs, we delete them from 
 	# the deb:
-	rmdir --ignore-fail-on-non-empty --parents $(TMP)/usr/share/perl5
+	-rmdir --ignore-fail-on-non-empty --parents $(TMP)/usr/share/perl5
 	
 	touch install-stamp
 

@@ -1,8 +1,21 @@
+libnet-libidn-perl (0.07-1) unstable; urgency=low
+
+  * Improved debianization, Makefile generation and portability
+
+ --  <jacob@internet24.de>  Mon, 26 Apr 2004 11:45:14 +0200
+
 libnet-libidn-perl (0.06-1) unstable; urgency=low
 
   * Doc changes, improved debianization
+  * Submit to Debian. Closes: #240437.
 
  --  <jacob@internet24.de>  Mon, 29 Mar 2004 19:31:37 +0200
+
+libnet-libidn-perl (0.05-2) unstable; urgency=low
+
+  * minor packaging issues
+
+ -- Matthias Urlichs <smurf@debian.org>  Sat, 27 Mar 2004 11:35:33 +0100
 
 libnet-libidn-perl (0.05-1) unstable; urgency=low
 

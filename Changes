@@ -1,5 +1,10 @@
 Revision history for Perl extension Net::LibIDN.
 
+0.07  
+	- More debianization fixes from Matthias Urlichs
+	- Makefile.PL remembers calling options in generated Makefile
+	- Rewrote tests to not depend on "de"-Tables
+
 0.06  Mon Mar 29 19:31:06 CEST 2004
 	- Added Cygwin compile infos (Thanks to Sergei Kolodka)
 	- Fixed builddeps, dependency bug in Makefile.PL (Thanks to Matthias Urlichs)
