@@ -1,3 +1,9 @@
+libnet-libidn-perl (0.05-1) unstable; urgency=low
+
+  * Minor fixes and optimizations
+
+ --  <jacob@internet24.de>  Thu, 18 Mar 2004 16:13:50 +0100
+
 libnet-libidn-perl (0.04-1) unstable; urgency=low
 
   * Update for real release of Libidn 0.4.0

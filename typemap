@@ -1,6 +1,0 @@
-char **						T_PTROBJ
-const char *					T_PTROBJ
-const uint32_t *				T_PTROBJ
-size_t *					T_PTROBJ
-uint32_t *					T_PTROBJ
-uint32_t **					T_PTROBJ

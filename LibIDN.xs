@@ -82,24 +82,16 @@ constant(sv,arg)
 
 
 char *
-idn_to_ascii(string, ...)
-		char * string
+idn_to_ascii(string, charset=default_charset, flags=0)
+		char *	string
+		char *	charset
+		int flags
+	PROTOTYPE: $;$$
 	PREINIT:
-		char *	charset = default_charset;
-		int		flags = 0;
-		STRLEN	c_len;
 		char *	utf8_str = NULL;
 		char *	tmp_str = NULL;
 		int		res;
 	CODE:
-		if (items>1)
-		{
-			charset = (char *)SvPV(ST(1), c_len);
-		}
-		if (items>2)
-		{
-			flags = SvIV(ST(2));
-		}
 		utf8_str = stringprep_convert(string, "UTF-8", charset);
 		if (utf8_str)
 		{
@@ -123,24 +115,16 @@ idn_to_ascii(string, ...)
 
 
 char *
-idn_to_unicode(string, ...)
-		char * string
+idn_to_unicode(string, charset=default_charset, flags=0)
+		char *	string
+		char *	charset
+		int flags;
+	PROTOTYPE: $;$$
 	PREINIT:
-		char *	charset = default_charset;
-		int		flags = 0;
-		STRLEN	c_len;
 		char *	tmp_str = NULL;
 		char *	res_str = NULL;
 		int		res;
 	CODE:
-		if (items>1)
-		{
-			charset = (char *)SvPV(ST(1), c_len);
-		}
-		if (items>2)
-		{
-			flags = SvIV(ST(2));
-		}
 		res = idna_to_unicode_8z8z(string, &tmp_str, flags);
 		if(res != IDNA_SUCCESS)
 		{
@@ -167,11 +151,11 @@ idn_to_unicode(string, ...)
 
 
 char *
-idn_punycode_encode(string, ...)
+idn_punycode_encode(string, charset=default_charset)
 		char *	string
+		char *	charset
+	PROTOTYPE: $;$
 	PREINIT:
-		STRLEN		c_len;
-		char *		charset = default_charset;
 		char *		utf8_str = NULL;
 		uint32_t *	q = NULL;
 		size_t		len,len2;
@@ -179,11 +163,6 @@ idn_punycode_encode(string, ...)
 		char *		res_str = NULL;
 		int			res;
 	CODE:
-		if (items>1)
-		{
-			charset = (char *)SvPV(ST(1), c_len);
-		}
-
 		utf8_str = stringprep_convert(string, "UTF-8", charset);
 		if (utf8_str)
 		{
@@ -226,22 +205,17 @@ idn_punycode_encode(string, ...)
 
 
 char *
-idn_punycode_decode(string, ...)
+idn_punycode_decode(string, charset=default_charset)
 		char *	string
+		char *	charset;
+	PROTOTYPE: $;$
 	PREINIT:
-		STRLEN		c_len;
-		char *		charset = default_charset;
 		char *		utf8_str = NULL;
 		uint32_t *	q = NULL;
 		size_t		len;
 		char *		res_str = NULL;
 		int			res;
 	CODE:
-		if (items>1)
-		{
-			charset = (char *)SvPV(ST(1), c_len);
-		}
-		
 		len = MAX_DNSLEN-1;
 		q = (uint32_t *) malloc(MAX_DNSLEN * sizeof(q[0]));
 		
@@ -284,17 +258,13 @@ idn_punycode_decode(string, ...)
 
 
 char *
-idn_prep_name(string, ...)
-		char *string
+idn_prep_name(string, charset=default_charset)
+		char *	string
+		char *	charset;
+	PROTOTYPE: $;$
 	PREINIT:
-		STRLEN		c_len;
-		char *		charset = default_charset;
-		char *		res_str = NULL;
+		char *	res_str = NULL;
 	CODE:
-		if (items>1)
-		{
-			charset = (char *)SvPV(ST(1), c_len);
-		}
 		res_str = idn_prep(string, charset, "Nameprep");
 		if (!res_str)
 		{
@@ -308,17 +278,13 @@ idn_prep_name(string, ...)
 
 
 char *
-idn_prep_kerberos5(string, ...)
-		char *string
+idn_prep_kerberos5(string, charset=default_charset)
+		char *	string
+		char *	charset
+	PROTOTYPE: $;$
 	PREINIT:
-		STRLEN		c_len;
-		char *		charset = default_charset;
-		char *		res_str = NULL;
+		char *	res_str = NULL;
 	CODE:
-		if (items>1)
-		{
-			charset = (char *)SvPV(ST(1), c_len);
-		}
 		res_str = idn_prep(string, charset, "KRBprep");
 		if (!res_str)
 		{
@@ -331,17 +297,13 @@ idn_prep_kerberos5(string, ...)
 		free(res_str);
 
 char *
-idn_prep_node(string, ...)
-		char *string
+idn_prep_node(string, charset=default_charset)
+		char *	string
+		char *	charset
+	PROTOTYPE: $;$
 	PREINIT:
-		STRLEN		c_len;
-		char *		charset = default_charset;
-		char *		res_str = NULL;
+		char *	res_str = NULL;
 	CODE:
-		if (items>1)
-		{
-			charset = (char *)SvPV(ST(1), c_len);
-		}
 		res_str = idn_prep(string, charset, "Nodeprep");
 		if (!res_str)
 		{
@@ -355,17 +317,13 @@ idn_prep_node(string, ...)
 
 
 char *
-idn_prep_resource(string, ...)
-		char *string
+idn_prep_resource(string, charset=default_charset)
+		char *	string
+		char *	charset
+	PROTOTYPE: $;$
 	PREINIT:
-		STRLEN		c_len;
-		char *		charset = default_charset;
-		char *		res_str = NULL;
+		char *	res_str = NULL;
 	CODE:
-		if (items>1)
-		{
-			charset = (char *)SvPV(ST(1), c_len);
-		}
 		res_str = idn_prep(string, charset, "Resourceprep");
 		if (!res_str)
 		{
@@ -379,17 +337,13 @@ idn_prep_resource(string, ...)
 
 
 char *
-idn_prep_plain(string, ...)
-		char *string
+idn_prep_plain(string, charset=default_charset)
+		char *	string
+		char *	charset
+	PROTOTYPE: $;$
 	PREINIT:
-		STRLEN		c_len;
-		char *		charset = default_charset;
-		char *		res_str = NULL;
+		char *	res_str = NULL;
 	CODE:
-		if (items>1)
-		{
-			charset = (char *)SvPV(ST(1), c_len);
-		}
 		res_str = idn_prep(string, charset, "plain");
 		if (!res_str)
 		{
@@ -403,17 +357,13 @@ idn_prep_plain(string, ...)
 
 
 char *
-idn_prep_trace(string, ...)
-		char *string
+idn_prep_trace(string, charset=default_charset)
+		char *	string
+		char *	charset
+	PROTOTYPE: $;$
 	PREINIT:
-		STRLEN		c_len;
-		char *		charset = default_charset;
-		char *		res_str = NULL;
+		char *	res_str = NULL;
 	CODE:
-		if (items>1)
-		{
-			charset = (char *)SvPV(ST(1), c_len);
-		}
 		res_str = idn_prep(string, charset, "trace");
 		if (!res_str)
 		{
@@ -427,17 +377,13 @@ idn_prep_trace(string, ...)
 
 
 char *
-idn_prep_sasl(string, ...)
-		char *string
+idn_prep_sasl(string, charset=default_charset)
+		char *	string
+		char *	charset
+	PROTOTYPE: $;$
 	PREINIT:
-		STRLEN		c_len;
-		char *		charset = default_charset;
-		char *		res_str = NULL;
+		char *	res_str = NULL;
 	CODE:
-		if (items>1)
-		{
-			charset = (char *)SvPV(ST(1), c_len);
-		}
 		res_str = idn_prep(string, charset, "SASLprep");
 		if (!res_str)
 		{
@@ -451,17 +397,13 @@ idn_prep_sasl(string, ...)
 
 
 char *
-idn_prep_iscsi(string, ...)
-		char *string
+idn_prep_iscsi(string, charset=default_charset)
+		char *	string
+		char *	charset
+	PROTOTYPE: $;$
 	PREINIT:
-		STRLEN		c_len;
-		char *		charset = default_charset;
 		char *		res_str = NULL;
 	CODE:
-		if (items>1)
-		{
-			charset = (char *)SvPV(ST(1), c_len);
-		}
 		res_str = idn_prep(string, charset, "ISCSIprep");
 		if (!res_str)
 		{
@@ -480,6 +422,7 @@ int
 tld_check(string, errpos,  ...)
 		char *string
 		size_t errpos
+	PROTOTYPE: $$;$$
 	PREINIT:
 		STRLEN	c_len;
 		char * charset = default_charset;
@@ -547,6 +490,7 @@ tld_check(string, errpos,  ...)
 char *
 tld_get(string)
 		char *string
+	PROTOTYPE: $
 	PREINIT:
 		char *res_str = NULL;
 		int res;
@@ -569,6 +513,7 @@ tld_get(string)
 SV *
 tld_get_table(tld)
 		char * tld
+	PROTOTYPE: $
 	PREINIT:
 		const Tld_table * tld_table = NULL;
 		HV * rh, * reh;

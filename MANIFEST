@@ -6,7 +6,6 @@ MANIFEST
 README
 _test.pl
 Artistic
-typemap
 META.yml                                 Module meta-data (added by MakeMaker)
 debian/changelog
 debian/compat
