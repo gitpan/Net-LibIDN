@@ -1,3 +1,10 @@
+libnet-libidn-perl (0.08-1) unstable; urgency=low
+
+  * Improved portability, shouldn't affect Debian package
+  * Lower case letter starts off pkg descr in control
+
+ --  <thor@enterprise>  Mon, 17 Jan 2005 15:11:20 +0100
+
 libnet-libidn-perl (0.07-1) unstable; urgency=low
 
   * Improved debianization, Makefile generation and portability

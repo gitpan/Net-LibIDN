@@ -5,8 +5,9 @@ use Getopt::Long;
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
 
-my %MakeParams = InitMakeParams();
 my $options;
+my $testno=1;
+my %MakeParams = InitMakeParams();
 
 WriteMakefile(%MakeParams);
 
@@ -143,6 +144,53 @@ sub FilterTLD
 	}
 }
 
+sub CheckCCode
+{
+	my $code = shift;
+	my $cflags = shift;
+	my $ldflags = shift;
+	my $output = shift;
+	my $test = '__test'.$testno++;
+	local * FILE;
+
+	if (open(FILE, ">$test.c"))
+	{
+		print FILE $code;
+		close(FILE);
+	}
+	else
+	{
+		return 0;
+	}
+
+	foreach my $cc (qw/cc gcc/)
+	{
+		unlink($test);
+		system "$cc $cflags $ldflags -o $test $test.c";
+		next if ($? >> 8);
+
+		if (open(FILE, "./$test|"))
+		{
+			my $match;
+			while(<FILE>)
+			{
+				$match = 1 if $_ eq $output;
+				last;
+			}
+			close(FILE);
+			next unless $match;
+		}
+		else
+		{
+			next;
+		}
+		unlink($test);
+		unlink("$test.c");
+		return 1;
+	}
+	return 0;
+}
+
 sub CheckLibidn
 {
 	my $cflags = shift;
@@ -163,27 +211,7 @@ int main(void)
 	printf("%d-%s", res, output);
 }
 EOT
-
-	open(FILE, ">__test1.c");
-	print FILE $test1;
-	close(FILE);
-
-	system "cc $cflags $ldflags -o __test1 __test1.c";
-	$final=1 if ($? >> 8);
-
-	unless ($final)
-	{
-		open(FILE, "./__test1|");
-		while(<FILE>)
-		{
-			$final=1 if $_ ne "0-libidn";
-		}
-		close(FILE);
-	}
-	unlink("__test1");
-	unlink("__test1.c");
-
-	return $result if ($final);
+	return $result unless CheckCCode($test1, $cflags, $ldflags, "0-libidn");
 
 	$result = 1;
 
@@ -200,27 +228,8 @@ int main(void)
 }
 EOT
 
-	open(FILE, ">__test2.c");
-	print FILE $test2;
-	close(FILE);
-
-	system "cc $cflags $ldflags -o __test2 __test2.c ";
-	$final = 1 if ($? >> 8);
-
-	unless ($final)
-	{
-		open(FILE, "./__test2|");
-		while(<FILE>)
-		{
-			$final = 1 if $_ ne "0-idn";
-		}
-		close(FILE);
-	}
-	unlink("__test2");
-	unlink("__test2.c");
+	return $result unless CheckCCode($test2, $cflags, $ldflags, "0-idn");
 	
-	return $result if $final;
-
 	return 2;
 }
 
