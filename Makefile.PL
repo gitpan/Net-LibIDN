@@ -12,7 +12,7 @@ WriteMakefile(%MakeParams);
 
 sub MY::postamble {
 	'
-LibIDN.pm: _LibIDN.pm test.pl
+LibIDN.pm: _LibIDN.pm _test.pl
 	perl Makefile.PL
 
 test.pl: _test.pl

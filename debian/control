@@ -1,8 +1,7 @@
 Source: libnet-libidn-perl
 Section: perl
 Priority: optional
-Build-Depends: debhelper (>= 4.0.2)
-Build-Depends-Indep: perl (>= 5.8.0-7), libidn11-dev
+Build-Depends: debhelper (>= 4.0.2), perl (>= 5.8.0-7), libidn11-dev
 Maintainer: Thomas Jacob <jacob@internet24.de>
 Standards-Version: 3.6.1
 

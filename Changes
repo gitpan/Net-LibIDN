@@ -1,5 +1,10 @@
 Revision history for Perl extension Net::LibIDN.
 
+0.06  Mon Mar 29 19:31:06 CEST 2004
+	- Added Cygwin compile infos (Thanks to Sergei Kolodka)
+	- Fixed builddeps, dependency bug in Makefile.PL (Thanks to Matthias Urlichs)
+	- A number of cosmetic changes
+
 0.05  Thu Mar 18 16:15:33 CET 2004
 	- Test code now uses \xHH literals instead of direct non-ASCII
 		character input, to be more portable, thanks to Sergei Kolodka

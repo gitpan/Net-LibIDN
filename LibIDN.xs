@@ -520,7 +520,6 @@ tld_get_table(tld)
 		AV * ra;
 		const Tld_table_element *e;
 		size_t pos;
-		int res;
 	CODE:
 		tld_table = tld_default_table(tld, NULL);
 		if (tld_table)

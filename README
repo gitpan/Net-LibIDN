@@ -1,4 +1,4 @@
-Net/LibIDN version 0.04
+Net/LibIDN version 0.06
 =======================
 
 This module provides Perl bindings for GNU Libidn by Simon Josefsson
@@ -15,11 +15,23 @@ To install this module type the following:
    make test
    make install
 
+Installing under Cygwin:
+
+   Sergei Koladka reports that the first make line above needs to be replaced by
+
+     make LD_RUN_PATH="/usr/lib" LDLOADLIBS="/usr/lib/libidn.a
+         \/usr/lib/libiconv.dll.a"
+
+   assuming that Libidn was compiled with --prefix=/usr. You also will need to
+   remove the >>die "This module requires GNU Libidn..."<<-line and manually set
+   $libidn either to 2 or 1 depending on whether you have/want to use TLD
+   checking support.
+
 DEPENDENCIES
 
 This module requires these other modules and libraries:
 
-  GNU Libidn >=0.4.0, >=0.3.5 when --disable-tld is not given
+  GNU Libidn >=0.4.0, >=0.3.5 (without TLD checking support)
        (lower versions might work, don't know)
 
 COPYRIGHT AND LICENCE
