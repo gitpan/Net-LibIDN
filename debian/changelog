@@ -1,0 +1,12 @@
+libnet-libidn-perl (0.04-1) unstable; urgency=low
+
+  * Update for real release of Libidn 0.4.0
+
+ --  <jacob@internet24.de>  Sun, 29 Feb 2004 16:33:41 +0100
+
+libnet-libidn-perl (0.03-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Thomas Jacob <jacob@internet24.de>  Sat, 14 Feb 2004 01:04:56 +0100
+

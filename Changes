@@ -1,0 +1,23 @@
+Revision history for Perl extension Net::LibIDN.
+
+0.04  Sun Feb 29 16:34:44 CET 2004
+	- Adapting to Dataformat changes in actual Libidn 0.4.0 release
+
+0.03  Mon Feb 16 21:25:21 CET 2004
+	- Changed name to Net::LibIDN
+	- Added support for TLD checking stuff in LibIDN >= 0.4.0
+	- Generally cleaned up the code
+	- Wrote some meaningful docs
+	- Makefile.PL checks if it can find Libidn with or without TLD checking
+	- Added debian control files, thanks to dh-make-perl
+
+0.02  Tue Jan 29 17:21:50 2004
+	- Minor Doc changes
+
+0.01  Tue Dec  2 11:04:50 2003
+	- original version; created by h2xs 1.21 with options
+		-xan NET::LibIDN idna.h
+	- worked on it till it resembled the interface of php-idn
+		of Turbo Fredriksson's php-idn bindings
+		(http://php-idn.bayour.com/)
+
