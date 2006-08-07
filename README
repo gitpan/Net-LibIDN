@@ -1,4 +1,4 @@
-Net/LibIDN version 0.08
+Net/LibIDN version 0.09
 =======================
 
 This module provides Perl bindings for GNU Libidn by Simon Josefsson
@@ -34,11 +34,16 @@ This module requires these other modules and libraries:
   GNU Libidn >=0.4.0, >=0.3.5 (without TLD checking support)
        (lower versions might work, don't know)
 
+Linux hint: If Makefile.PL says that it cannot find GNU Libidn, even though
+you compiled/installed it, consider adding the location of the Libidn .so
+files to /etc/ld.so.conf. Also, take a look at the --with-libidn and
+--with-libidn-inc options.
+
 COPYRIGHT AND LICENCE
 
 			   Perl Module Net::LibIDN
 
-		       Copyright 2003-2004, Thomas Jacob, Internet24.de
+		       Copyright 2003-2006, Thomas Jacob, Internet24.de
 			   All rights reserved
 
     This program is free software; you can redistribute it and/or modify

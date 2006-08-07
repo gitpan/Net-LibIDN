@@ -47,7 +47,7 @@ our @EXPORT = qw(
 	IDNA_ALLOW_UNASSIGNED
 	IDNA_USE_STD3_ASCII_RULES
 );
-our $VERSION = '0.08';
+our $VERSION = '0.09';
 
 # avoid prototyping error message
 
@@ -243,6 +243,25 @@ following fields:
 =back
 
 #ENDIF_TLD
+=back
+
+=head2 Limitations
+
+There is currently no support for Perl's unicode capabilities (man perlunicode).
+All input strings are assumed to be octet strings, all output strings are 
+generated as octet strings. Thus, if you require Perl's unicode features, you 
+will have to convert your strings manually. For example:
+
+=over 4
+
+use Encode;
+
+use Data::Dumper;
+
+print Dumper(Net::LibIDN::idn_to_unicode('xn--uro-j50a.com', 'utf-8'));
+
+print Dumper(decode('utf-8', Net::LibIDN::idn_to_unicode('xn--uro-j50a.com', 'utf-8')));
+
 =back
 
 =head1 AUTHOR

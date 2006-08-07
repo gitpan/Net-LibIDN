@@ -1,5 +1,8 @@
 Revision history for Perl extension Net::LibIDN.
 
+0.09  
+	- Minor doc changes
+
 0.08  Mon Jan 17 13:07:04 CET 2005
 	- Try cc as well as gcc when testing for a functioning Libidn-Installation in
 	  Makefile.PL to improve portability, thanks to Keith A Hackworth
