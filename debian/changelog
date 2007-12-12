@@ -1,3 +1,11 @@
+libnet-libidn-perl (0.10-0.1) unstable; urgency=low
+
+  * Non-maintainer upload
+  * Shut up CPAN testers
+  * Correct some lintian problem
+
+ --  <jacob@internet24.de>  Thu, 13 Dec 2007 00:02:55 +0100
+
 libnet-libidn-perl (0.09-1) unstable; urgency=low
 
   * Minor doc changes 

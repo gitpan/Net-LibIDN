@@ -47,7 +47,7 @@ our @EXPORT = qw(
 	IDNA_ALLOW_UNASSIGNED
 	IDNA_USE_STD3_ASCII_RULES
 );
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 # avoid prototyping error message
 
@@ -106,6 +106,8 @@ bootstrap Net::LibIDN $VERSION;
 
 1;
 __END__
+
+=encoding latin1
 
 =head1 NAME
 

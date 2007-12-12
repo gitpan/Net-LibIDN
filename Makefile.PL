@@ -69,7 +69,11 @@ sub InitMakeParams
 
 	my $libidn = CheckLibidn($Params{INC}, $Params{LIBS});
 
-	die "This module requires GNU Libidn, which could not be found.\n" unless $libidn;
+	unless($libidn)
+	{
+		print "This module requires GNU Libidn, which could not be found.\n" unless $libidn;
+		exit 0;
+	}
 
 	print "Found LibIDN, ";
 	print $libidn == 1? "without": "with";

@@ -1,6 +1,10 @@
 Revision history for Perl extension Net::LibIDN.
 
-0.09  
+0.10  Thu Dec 13 00:18:56 CET 2007
+	- Shut up CPAN tester mails
+	- Correct some linitian problems
+
+0.09  Mon Aug  7 19:20:00 CEST 2006
 	- Minor doc changes
 
 0.08  Mon Jan 17 13:07:04 CET 2005
