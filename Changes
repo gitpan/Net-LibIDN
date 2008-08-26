@@ -1,5 +1,10 @@
 Revision history for Perl extension Net::LibIDN.
 
+0.11  Tue Aug 26 19:42:18 CEST 2008
+	- Move ldflags to back of cc test compile to improve the portability of
+	  Libidn installation checks yet again, 
+	  thanks to nix of esperi dot o r g dot uk 
+
 0.10  Thu Dec 13 00:18:56 CET 2007
 	- Shut up CPAN tester mails
 	- Correct some linitian problems

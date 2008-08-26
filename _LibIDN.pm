@@ -47,7 +47,7 @@ our @EXPORT = qw(
 	IDNA_ALLOW_UNASSIGNED
 	IDNA_USE_STD3_ASCII_RULES
 );
-our $VERSION = '0.10';
+our $VERSION = '0.11';
 
 # avoid prototyping error message
 

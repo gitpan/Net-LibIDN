@@ -32,10 +32,7 @@ sub InitMakeParams
 		($] >= 5.005 ?	## Add these new keywords supported since 5.005
 		(ABSTRACT_FROM	=> 'LibIDN.pm', # retrieve abstract from module
 		AUTHOR			=> 'Thomas Jacob <jacob@internet24.de>') : ()),
-#		MAN3PODS		=> { 'LibIDN.pm' },
 		PM				=> { 'LibIDN.pm' => '$(INST_LIB)/Net/LibIDN.pm' },
-#		PL_FILES		=> {},
-#		EXE_FILES		=> [],
 		clean			=> { FILES => "test.pl LibIDN.pm" }
 	);
 	my ($libdir, $incdir, $disable_tld);
@@ -170,7 +167,7 @@ sub CheckCCode
 	foreach my $cc (qw/cc gcc/)
 	{
 		unlink($test);
-		system "$cc $cflags $ldflags -o $test $test.c";
+		system "$cc $cflags -o $test $test.c $ldflags";
 		next if ($? >> 8);
 
 		if (open(FILE, "./$test|"))
@@ -213,6 +210,8 @@ int main(void)
 	
 	res = idna_to_ascii_8z("libidn", &output, 0);
 	printf("%d-%s", res, output);
+
+	return 0;
 }
 EOT
 	return $result unless CheckCCode($test1, $cflags, $ldflags, "0-libidn");
@@ -229,6 +228,8 @@ int main(void)
 
 	res =tld_get_z ("libidn.idn", &output);	
 	printf("%d-%s", res, output);
+	
+	return 0;
 }
 EOT
 
