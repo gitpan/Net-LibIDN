@@ -1,5 +1,10 @@
 Revision history for Perl extension Net::LibIDN.
 
+0.12  Thu Feb 26 13:44:06 CET 2009
+	- Applied NetBSD compatibility patch (Thanks Havard Eidnes), fixes #39294
+	- Applied Win32 memory free compatibility patch (Thanks CPAN user SISYPHUS),
+	  maybe fixes #43110
+
 0.11  Tue Aug 26 19:42:18 CEST 2008
 	- Move ldflags to back of cc test compile to improve the portability of
 	  Libidn installation checks yet again, 

@@ -1,6 +1,7 @@
 use strict;
 use ExtUtils::MakeMaker;
 use Getopt::Long;
+use Config;
 
 # See lib/ExtUtils/MakeMaker.pm for details of how to influence
 # the contents of the Makefile that is written.
@@ -52,7 +53,7 @@ sub InitMakeParams
 	}
 	else
 	{
-		$Params{LIBS} = '-lidn';
+		$Params{LIBS} = $Config{ldflags} . ' -lidn';
 	}
 
 	if ($incdir)

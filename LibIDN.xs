@@ -5,6 +5,7 @@
 #include <idna.h>
 #include <punycode.h>
 #include <stringprep.h>
+#include <idn-free.h>
 
 #ifdef HAVE_TLD
 #include <tld.h>
@@ -27,13 +28,13 @@ idn_prep(char * string, char * charset, char * profile)
 		return NULL;
 
 	res = stringprep_profile(utf8, &output, profile, 0);
-	free(utf8);
+	idn_free(utf8);
 
 	if( (res != STRINGPREP_OK) || !output)
 		return NULL;
 
 	res_str = stringprep_convert(output, charset, "UTF-8");
-	free(output);
+	idn_free(output);
 
 	return res_str;
 }
@@ -96,7 +97,7 @@ idn_to_ascii(string, charset=default_charset, flags=0)
 		if (utf8_str)
 		{
 			res = idna_to_ascii_8z(utf8_str, &tmp_str, flags);
-			free(utf8_str);
+			idn_free(utf8_str);
 		}
 		else
 		{
@@ -111,7 +112,7 @@ idn_to_ascii(string, charset=default_charset, flags=0)
 		RETVAL
 	CLEANUP:
 		if (tmp_str)
-			free(tmp_str);
+			idn_free(tmp_str);
 
 
 char *
@@ -133,7 +134,7 @@ idn_to_unicode(string, charset=default_charset, flags=0)
 		if (tmp_str)
 		{
 			res_str = stringprep_convert(tmp_str, charset, "UTF-8");
-			free(tmp_str);
+			idn_free(tmp_str);
 		}
 		else
 		{
@@ -147,7 +148,7 @@ idn_to_unicode(string, charset=default_charset, flags=0)
 	OUTPUT:
 		RETVAL
 	CLEANUP:
-		free(res_str);
+		idn_free(res_str);
 
 
 char *
@@ -167,7 +168,7 @@ idn_punycode_encode(string, charset=default_charset)
 		if (utf8_str)
 		{
 			q = stringprep_utf8_to_ucs4(utf8_str, -1, &len);
-			free(utf8_str);
+			idn_free(utf8_str);
 		}
 		else
 		{
@@ -182,7 +183,7 @@ idn_punycode_encode(string, charset=default_charset)
 		tmp_str = malloc(MAX_DNSLEN*sizeof(char));
 		len2 = MAX_DNSLEN-1;
 		res = punycode_encode(len, q, NULL, &len2, tmp_str);
-		free(q);
+		idn_free(q);
 
 		if (res != PUNYCODE_SUCCESS)
 		{
@@ -201,7 +202,7 @@ idn_punycode_encode(string, charset=default_charset)
 	OUTPUT:
 		RETVAL
 	CLEANUP:
-		free(res_str);
+		idn_free(res_str);
 
 
 char *
@@ -239,7 +240,7 @@ idn_punycode_decode(string, charset=default_charset)
 		if (utf8_str)
 		{
 			res_str = stringprep_convert(utf8_str, charset, "UTF-8");
-			free(utf8_str);
+			idn_free(utf8_str);
 		}
 		else
 		{
@@ -254,7 +255,7 @@ idn_punycode_decode(string, charset=default_charset)
 	OUTPUT:
 		RETVAL
 	CLEANUP:
-		free(res_str);
+		idn_free(res_str);
 
 
 char *
@@ -274,7 +275,7 @@ idn_prep_name(string, charset=default_charset)
 	OUTPUT:
 		RETVAL
 	CLEANUP:
-		free(res_str);
+		idn_free(res_str);
 
 
 char *
@@ -294,7 +295,7 @@ idn_prep_kerberos5(string, charset=default_charset)
 	OUTPUT:
 		RETVAL
 	CLEANUP:
-		free(res_str);
+		idn_free(res_str);
 
 char *
 idn_prep_node(string, charset=default_charset)
@@ -313,7 +314,7 @@ idn_prep_node(string, charset=default_charset)
 	OUTPUT:
 		RETVAL
 	CLEANUP:
-		free(res_str);
+		idn_free(res_str);
 
 
 char *
@@ -333,7 +334,7 @@ idn_prep_resource(string, charset=default_charset)
 	OUTPUT:
 		RETVAL
 	CLEANUP:
-		free(res_str);
+		idn_free(res_str);
 
 
 char *
@@ -353,7 +354,7 @@ idn_prep_plain(string, charset=default_charset)
 	OUTPUT:
 		RETVAL
 	CLEANUP:
-		free(res_str);
+		idn_free(res_str);
 
 
 char *
@@ -373,7 +374,7 @@ idn_prep_trace(string, charset=default_charset)
 	OUTPUT:
 		RETVAL
 	CLEANUP:
-		free(res_str);
+		idn_free(res_str);
 
 
 char *
@@ -393,7 +394,7 @@ idn_prep_sasl(string, charset=default_charset)
 	OUTPUT:
 		RETVAL
 	CLEANUP:
-		free(res_str);
+		idn_free(res_str);
 
 
 char *
@@ -413,7 +414,7 @@ idn_prep_iscsi(string, charset=default_charset)
 	OUTPUT:
 		RETVAL
 	CLEANUP:
-		free(res_str);
+		idn_free(res_str);
 
 
 #ifdef HAVE_TLD
@@ -450,7 +451,7 @@ tld_check(string, errpos,  ...)
 			XSRETURN_UNDEF;
 		}
 		res = stringprep_profile(utf8_str, &tmp_str, "Nameprep", 0);
-		free(utf8_str);
+		idn_free(utf8_str);
 		if (res != STRINGPREP_OK)
 		{
 			XSRETURN_UNDEF;
@@ -458,18 +459,18 @@ tld_check(string, errpos,  ...)
 		if (tld)
 		{
 			q = stringprep_utf8_to_ucs4(tmp_str, -1, &len);
-			free(tmp_str);
+			idn_free(tmp_str);
 			if (!q)
 			{
 				XSRETURN_UNDEF;
 			}
 			res = tld_check_4t(q, len, &errpos, tld_table);
-			free(q);
+			idn_free(q);
 		}
 		else
 		{
 			res = tld_check_8z(tmp_str, &errpos, NULL);
-			free(tmp_str);
+			idn_free(tmp_str);
 		}
 		if (res == TLD_SUCCESS)
 		{
@@ -507,7 +508,7 @@ tld_get(string)
 	OUTPUT:
 		RETVAL
 	CLEANUP:
-		free(res_str);
+		idn_free(res_str);
 
 
 SV *
